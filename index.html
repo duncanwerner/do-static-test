@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+	<title>...</title>
+  <style>
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: 12pt;
+  padding: 1rem;
+}
+
+  </style>
+</head>
+
+<body>
+
+<p>
+  If you open a json file in a web browser first, it will work fine. You can
+  then open the file via `fetch`.
+</p>
+
+<p>
+  If you open the file with `fetch` first, it will break and return a 400. After
+  that, it will return 400 in web browser too, until the cache is cleared.
+</p>
+
+<p>
+  Note that if you redeploy this example you may have to wait for the cache to clear.  
+</p>
+
+<hr/>
+
+<h4>Test file A</h4>
+
+<p>
+  <a href='A.json' target='_blank'>open A.json in browser</a> 
+</p>
+
+<p>
+  <a href='#' class='fetch' data-file='A.json'>open A.json with fetch</a> 
+</p>
+
+<hr/>
+
+<h4>Test file B</h4>
+
+<p>
+  <a href='B.json' target='_blank'>open B.json in browser</a>
+</p>
+
+<p>
+  <a href='#' class='fetch' data-file='B.json'>open B.json with fetch</a> 
+</p>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  Array.prototype.forEach.call(document.querySelectorAll('.fetch'), element => {
+    element.addEventListener('click', (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+      const file = event.target.dataset.file;
+      fetch(file).then(result => {
+        alert('result status: ' + result.status);
+      });
+    });
+  });
+
+});
+
+</script>
+
+</body>
+</html>
